@@ -2,7 +2,6 @@ import string
 import random
 
 alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + string.punctuation + " "
-print(alphabet)
 
 def gen_key(alphabet=alphabet):
     key = list(alphabet)
@@ -19,12 +18,14 @@ def decrypt(key,msg):
         idx = key.index(char)
         print(key[idx],end="")
         
-msg = "0xlol is a L33T H4X0R"
+msg = input("Enter the message: ")
 
 key = gen_key()
 
+print("Encrypted: ", end="")
 encrypt(key,msg)
 
 print()
 
+print("Decrypted: ", end="")
 decrypt(key,msg)

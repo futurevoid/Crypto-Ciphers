@@ -2,7 +2,6 @@ import string
 import random
 
 alphabet = string.ascii_uppercase + string.ascii_lowercase 
-print(alphabet)
 
 def gen_key(alphabet=alphabet):
     key = list(alphabet)
