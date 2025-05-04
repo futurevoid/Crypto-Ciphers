@@ -26,6 +26,7 @@ def decrypt(ciphertext, key):
 msg = input("Enter the message: ")
 key = gen_key(msg)
 ciphertext = encrypt(msg, key)
-print("Encrypted: " ,ciphertext.encode('utf-8'))
+print("Encrypted: " ,ciphertext)
+print("Encrypted(UTF-8 Encoded): ", ciphertext.encode('utf-8'))
 plaintext = decrypt(ciphertext, key)
 print("Decrypted: ", plaintext)
