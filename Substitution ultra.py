@@ -1,31 +1,38 @@
 import string
 import random
 
-alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + string.punctuation + " "
+alphabet = string.ascii_letters + string.digits + string.punctuation + " "
 
 def gen_key(alphabet=alphabet):
     key = list(alphabet)
     random.shuffle(key)
     return key
 
-def encrypt(key,msg):
+def encrypt(key, msg):
+    encrypted_msg = ""
     for char in msg:
-        idx = key.index(char)
-        print(alphabet[idx],end="")
+        idx = alphabet.index(char)
+        encrypted_msg += key[idx]
+    return encrypted_msg
 
-def decrypt(key,msg):
+def decrypt(key, msg):
+    decrypted_msg = ""
     for char in msg:
         idx = key.index(char)
-        print(key[idx],end="")
-        
-msg = input("Enter the message: ")
+        decrypted_msg += alphabet[idx]
+    return decrypted_msg
 
 key = gen_key()
 
-print("Encrypted: ", end="")
-encrypt(key,msg)
+print("Substitution Cipher Encryptor/Decryptor by 0xl33t",end="\n\n")
 
-print()
+msg = input(f"Enter the Message to be Encrypted:")
 
-print("Decrypted: ", end="")
-decrypt(key,msg)
+encrypted_message = encrypt(key, msg)
+
+print(f"Encrypted: {encrypted_message}")
+
+decrypted_message = decrypt(key, encrypted_message)
+
+print(f"Decrypted: {decrypted_message}")
+

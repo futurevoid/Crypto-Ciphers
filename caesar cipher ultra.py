@@ -1,30 +1,38 @@
 import string
+import random
 
-def encrypt(alphabet, shift ,msg):
-    shift = shift % len(alphabet)
-    shifted = alphabet[shift:] + alphabet[:shift]
-    table = str.maketrans(alphabet, shifted)
-    encrypted_msg = msg.translate(table)
-    print(f"Encrypted: {encrypted_msg}")
+alphabet = string.ascii_letters + string.digits + string.punctuation + " "
+
+def gen_key(alphabet=alphabet):
+    key = list(alphabet)
+    random.shuffle(key)
+    return key
+
+def encrypt(key, msg):
+    encrypted_msg = ""
+    for char in msg:
+        idx = alphabet.index(char)
+        encrypted_msg += key[idx]
     return encrypted_msg
-    
 
-def decrypt(alphabet, shift, msg):
-    shift = shift % len(alphabet)
-    shifted = alphabet[shift:] + alphabet[:shift]
-    table = str.maketrans(shifted, alphabet)
-    decrypted_msg = msg.translate(table)
-    print(f"Decrypted: {decrypted_msg}")
+def decrypt(key, msg):
+    decrypted_msg = ""
+    for char in msg:
+        idx = key.index(char)
+        decrypted_msg += alphabet[idx]
     return decrypted_msg
 
-alphabet = string.ascii_uppercase + string.ascii_lowercase + string.digits + string.punctuation + " "
-        
-msg = input("Enter the message: ")
+key = gen_key()
 
-shift = int(input("Enter the shift value: "))
+print("Substitution Cipher Encryptor/Decryptor by 0xl33t",end="\n\n")
 
-encrypted = encrypt(alphabet,shift,msg)
+msg = input(f"Enter the Message to be Encrypted:")
 
-print()
+encrypted_message = encrypt(key, msg)
 
-decrypted = decrypt(alphabet,shift,encrypted)
+print(f"Encrypted: {encrypted_message}")
+
+decrypted_message = decrypt(key, encrypted_message)
+
+print(f"Decrypted: {decrypted_message}")
+

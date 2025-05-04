@@ -1,5 +1,8 @@
+import random
+import string
 def gen_key(msg):
-    key = input("Enter the key: ")
+    key = string.printable + ""
+    random.shuffle(list(key))
     if len(key) < len(msg):
         msg_len = int(len(msg)/len(key)+1)
         key = (key * msg_len)
