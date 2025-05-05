@@ -1,36 +1,32 @@
 import numpy as np
 
+dim = int(input("Enter the length of the message: "))
+
 # Initialize global matrices
-key_matrix = np.zeros((3, 3), dtype=int)
-message_vector = np.zeros((3, 1), dtype=int)
-cipher_matrix = np.zeros((3, 1), dtype=int)
+key_matrix = np.zeros((dim, dim), dtype=int)
+message_vector = np.zeros((dim, 1), dtype=int)
+cipher_matrix = np.zeros((dim, 1), dtype=int)
 
 # Function to generate the key matrix from the key string
-def get_key_matrix(key):
+def gen_key(key):
     k = 0
-    for i in range(3):
-        for j in range(3):
-            key_matrix[i][j] = ord(key[k]) % 65
+    for row in range(dim):
+        for col in range(dim):
+            key_matrix[row][col] = ord(key[k]) % 256
             k += 1
 
-# Function to encrypt the message vector
-def encrypt(message_vector):
-    for i in range(3):
-        cipher_matrix[i][0] = 0
-        for x in range(3):
-            cipher_matrix[i][0] += (key_matrix[i][x] * message_vector[x][0])
-        cipher_matrix[i][0] = cipher_matrix[i][0] % 26
+def encrypt(message):
+    ciphertext = ""
+    for idx in range(dim):
+        message_vector[idx][0] = ord(message[idx]) % 256
+    cipher_matrix = np.dot(key_matrix, message_vector) % 256
+    for idx in range(dim):
+        ciphertext += chr(int(cipher_matrix[idx][0]))
+    return ciphertext
 
-# Hill cipher wrapper function
-def hill_cipher(message, key):
-    get_key_matrix(key)
-    for i in range(3):
-        message_vector[i][0] = ord(message[i]) % 65
-    encrypt(message_vector)
-    ciphertext = [chr(cipher_matrix[i][0] + 65) for i in range(3)]
-    print("The Ciphertext:", "".join(ciphertext))
-
-# Example usage
-message = "DOG"
-key = "YHGINUKER"  # Must be 9 characters long for 3x3 matrix
-hill_cipher(message, key)
+msg = input("Enter the message: ")
+key = input(f"Enter the key of length {dim**2}: ")
+gen_key(key)
+ciphertext = encrypt(msg)
+print("Encrypted: ", ciphertext)
+print("Encrypted(UTF-8 Encoded): ", ciphertext.encode('utf-8'))
